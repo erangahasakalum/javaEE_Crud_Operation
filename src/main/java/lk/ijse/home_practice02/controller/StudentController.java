@@ -21,6 +21,7 @@ public class StudentController extends HttpServlet {
 
     Connection connection;
     static String SAVE_STUDENT ="INSERT INTO student(id,name,city,telephone) VALUES(?,?,?,?)";
+    static String DELETE_STUDENT = "DELETE FROM student WHERE id=?";
 
     @Override
     public void init() {
@@ -66,6 +67,19 @@ public class StudentController extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("hi");
+        String student_id = req.getParameter("id");
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(DELETE_STUDENT);
+            ps.setString(1,student_id);
+
+            if (ps.executeUpdate() != 0){
+                resp.getWriter().write("Deleted");
+            }else {
+                resp.getWriter().write("Not Deleted");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
