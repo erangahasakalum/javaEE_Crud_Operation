@@ -23,4 +23,11 @@ public final class StudentProcess implements StudentData {
 
         return ps.executeUpdate()>0;
     }
+
+    @Override
+    public boolean deleteStudent(String studentId, Connection connection) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement(DELETE_STUDENT);
+        ps.setString(1,studentId);
+        return ps.executeUpdate()>0;
+    }
 }
