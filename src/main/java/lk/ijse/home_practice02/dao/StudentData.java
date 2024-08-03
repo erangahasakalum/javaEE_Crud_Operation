@@ -9,5 +9,6 @@ public sealed interface StudentData permits StudentProcess{
     boolean saveStudent(StudentDto studentDto, Connection connection) throws SQLException;
     boolean deleteStudent(String studentId,Connection connection) throws SQLException;
     StudentDto getAll(String studentId,Connection connection) throws SQLException;
-    boolean update (String studentId,StudentDto studentDto,Connection connection) throws SQLException;
+
+    boolean updateStudent(String studentId,StudentDto studentDTO,Connection connection) throws SQLException;
 }

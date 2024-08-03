@@ -51,13 +51,14 @@ public final class StudentProcess implements StudentData {
     }
 
     @Override
-    public boolean update(String studentId, StudentDto studentDto, Connection connection) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(UPDATE_STUDENT);
-        ps.setString(1,studentDto.getName());
-        ps.setString(2,studentDto.getCity());
-        ps.setString(3,studentDto.getTelephone());
-        ps.setString(4,studentDto.getId());
+    public boolean updateStudent(String studentId, StudentDto updatedStudent, Connection connection) throws SQLException {
+            var ps = connection.prepareStatement(UPDATE_STUDENT);
+            ps.setString(1, updatedStudent.getName());
+            ps.setString(2, updatedStudent.getCity());
+            ps.setString(3, updatedStudent.getTelephone());
+            ps.setString(4, studentId);
+            return ps.executeUpdate() != 0;
 
-        return ps.executeUpdate() > 0 ;
     }
+
 }
