@@ -13,6 +13,9 @@ import lk.ijse.home_practice02.dao.StudentProcess;
 import lk.ijse.home_practice02.dto.StudentDto;
 import lombok.SneakyThrows;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.Writer;
 import java.sql.*;
@@ -29,14 +32,18 @@ public class StudentController extends HttpServlet {
     @Override
     public void init() {
         try {
-            var driverClass = getServletContext().getInitParameter("driver-class");
+            /*var driverClass = getServletContext().getInitParameter("driver-class");
             var dbUrl = getServletContext().getInitParameter("dbURL");
             var userName = getServletContext().getInitParameter("dbUserName");
-            var password = getServletContext().getInitParameter("dbPassword");
+            var password = getServletContext().getInitParameter("dbPassword");*/
 
-            Class.forName(driverClass);
-            this.connection = DriverManager.getConnection(dbUrl, userName, password);
-        } catch (ClassNotFoundException | SQLException e) {
+            var cdx = new InitialContext();
+            DataSource pool = (DataSource) cdx.lookup("java:comp/env/jdbc/studentRegistration");//methana gana resourse eka onama ekak wenna puluwan eka api narrow cast krnawa dta source ekak wdiyata
+            this.connection = pool.getConnection();
+
+          /*  Class.forName(driverClass);
+            this.connection = DriverManager.getConnection(dbUrl, userName, password);*/
+        } catch (NamingException | SQLException e) {
             e.printStackTrace();
         }
     }
